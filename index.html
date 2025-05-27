@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD API</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .item { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>CRUD API with Node.js</h1>
+  
+  <h2>Create Item</h2>
+  <input type="text" id="new-name" placeholder="Item Name" />
+  <input type="text" id="new-description" placeholder="Item Description" />
+  <button onclick="createItem()">Create Item</button>
+
+  <h2>Items List</h2>
+  <div id="items-list"></div>
+
+  <script>
+    // Helper function to fetch and display items
+    async function fetchItems() {
+      const response = await fetch('/api/items');
+      const items = await response.json();
+      const itemsList = document.getElementById('items-list');
+      itemsList.innerHTML = '';
+      items.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item';
+        itemElement.innerHTML = `
+          <strong>${item.name}</strong>: ${item.description}
+          <button onclick="deleteItem(${item.id})">Delete</button>
+          <button onclick="showUpdateForm(${item.id})">Update</button>
+        `;
+        itemsList.appendChild(itemElement);
+      });
+    }
+
+    // Create new item
+    async function createItem() {
+      const name = document.getElementById('new-name').value;
+      const description = document.getElementById('new-description').value;
+      const response = await fetch('/api/items', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description })
+      });
+      await response.json();
+      fetchItems(); // Refresh the item list
+    }
+
+    // Delete item
+    async function deleteItem(id) {
+      await fetch(`/api/items/${id}`, { method: 'DELETE' });
+      fetchItems(); // Refresh the item list
+    }
+
+    // Show update form
+    function showUpdateForm(id) {
+      const name = prompt("Enter new name:");
+      const description = prompt("Enter new description:");
+      if (name && description) {
+        updateItem(id, name, description);
+      }
+    }
+
+    // Update item
+    async function updateItem(id, name, description) {
+      await fetch(`/api/items/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description })
+      });
+      fetchItems(); // Refresh the item list
+    }
+
+    // Fetch items on page load
+    window.onload = fetchItems;
+  </script>
+</body>
+</html>
