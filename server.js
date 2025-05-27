@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static('public'));  // Serve static files like HTML, CSS, JS
 
 // Root Route (Welcome message)
-app.get('/', (req, res) => {
+app.get('/api/items', (req, res) => {
   res.send('<h1>Welcome to the CRUD API</h1><p>API is running!</p>');
 });
 
