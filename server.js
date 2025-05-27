@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
   res.send('<h1>Welcome to the CRUD API</h1><p>API is running!</p>');
 });
 
+git add server.js
+git commit -m "Added root route for basic welcome page"
+git push origin master
+
 // Define your other API routes
 app.get('/api/items', (req, res) => {
   res.json(data);
