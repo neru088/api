@@ -13,14 +13,13 @@ app.use(express.json());
 app.use(express.static('public'));  // Serve static files like HTML, CSS, JS
 
 // Serve a simple message on the root route
-app.get('/api/items', (req, res) => {
+app.get('/', (req, res) => {
   res.send('<h1>Welcome to the CRUD API</h1><p>API is running!</p>');
 });
 
-
-// Define your other API routes
+// Define your API routes
 app.get('/api/items', (req, res) => {
-  res.json(data);
+  res.json(data); // Return the list of items
 });
 
 app.post('/api/items', (req, res) => {
@@ -47,7 +46,7 @@ app.delete('/api/items/:id', (req, res) => {
   if (itemIndex === -1) return res.status(404).json({ error: 'Item not found' });
 
   data.splice(itemIndex, 1);
-  res.status(204).send();
+  res.status(204).send(); // Successfully deleted
 });
 
 // Start the server
