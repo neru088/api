@@ -12,7 +12,7 @@ let data = [
 app.use(express.json());
 
 // Serve a simple message on the root route
-app.get('/', (req, res) => {
+app.get('/api/items', (req, res) => {
   res.send('<h1>Welcome to the CRUD API</h1><p>API is running!</p>');
 });
 
