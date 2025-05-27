@@ -10,6 +10,7 @@ let data = [
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(express.static('public'));  // Serve static files like HTML, CSS, JS
 
 // Serve a simple message on the root route
 app.get('/api/items', (req, res) => {
