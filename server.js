@@ -18,7 +18,7 @@ app.get('/api/items', (req, res) => {
 });
 
 // CRUD API Routes
-app.get('/api/items', (req, res) => {
+app.get('/', (req, res) => {
   res.json(data);  // Return the list of items
 });
 
